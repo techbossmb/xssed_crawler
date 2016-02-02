@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
 
+///modified for data incubators challenge
 namespace XssedCrawler {
 	public class XssCrawler {
 		private const string BASE_URL = @"http://www.xssed.com";
@@ -22,10 +23,16 @@ namespace XssedCrawler {
 				string data = tryGetUrlData(ARCHIVE_URL + page);
 				var mirrors = WebPage.ParseWebPage(data, @"/mirror/\w*");
 				getVulnerablePages(mirrors);
+                Console.CancelKeyPress += cancelEventHandler;
 			}
 			FileManager.SaveUrlListToDisk(urls);
 		}
 
+        private void cancelEventHandler(object sender, ConsoleCancelEventArgs e)
+        {
+            FileManager.SaveVulnerableUrlListToDisk(urls);
+            
+        }
 		private void getVulnerablePages(MatchCollection mirrors) {
 			foreach (var pageUrl in mirrors) {
 				string data = tryGetUrlData(BASE_URL + pageUrl);

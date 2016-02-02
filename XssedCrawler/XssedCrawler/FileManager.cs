@@ -33,6 +33,11 @@ namespace XssedCrawler {
 			File.AppendAllLines(URL_LIST_FILE, urls.ToArray());
 		}
 
+        public static void SaveVulnerableUrlListToDisk(IEnumerable<String> urls)
+        {
+            File.AppendAllLines(VULN_URL_LIST_FILE, urls.ToArray());
+        }
+
 		/// <summary>
 		/// Load the list of javascript handlers from a file
 		/// </summary>
